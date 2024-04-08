@@ -6,8 +6,9 @@ import { StoneType } from 'components/Stone/Stone';
 import { PointClickHandler } from 'components/Point/Point';
 import { canPlaceStone } from 'services/gameLogic';
 import { IPlayer, newPlayer } from 'services/player';
+import * as process from "process";
 
-const AWSLambdaUrl = ""
+const AWSLambdaUrl = process.env.AWS_LAMBDA_URL ?? ''
 
 /**
  * JSON returned from aws lambda backend
