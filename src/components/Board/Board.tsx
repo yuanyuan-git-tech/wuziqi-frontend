@@ -28,9 +28,8 @@ export interface BoardProps {
 
 /**
  * The square game board, made up of intersecting Points.
- * The grid can be different sizes: 19x19, 13x13, and 9x9 are standard.
  */
-const Board = ({boardSize = 9, boardData, turn = false, handleClickPoint}: BoardProps) => {
+const Board = ({boardSize = 7, boardData, turn = false, handleClickPoint}: BoardProps) => {
   // Rows containing all Points.
   let boardRows: JSX.Element[] = [];
 
@@ -49,7 +48,7 @@ const Board = ({boardSize = 9, boardData, turn = false, handleClickPoint}: Board
           turn={turn}
         />
       );
-    };
+    }
     // Create row.
     boardRows.push(
       <BoardRow boardSize={boardSize} rowIndex={y} key={y}>{points}</BoardRow>

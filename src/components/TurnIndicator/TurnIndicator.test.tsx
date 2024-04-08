@@ -9,8 +9,8 @@ describe('<TurnIndicator />', () => {
   test('it should mount', () => {
 
     const testPlayers = [
-      newPlayer('Player 1', StoneType.Black), 
-      newPlayer('Player 2', StoneType.White)
+      newPlayer('You', StoneType.Black),
+      newPlayer('AI Agent', StoneType.White)
     ];
 
     render(<TurnIndicator turn={false} players={testPlayers} />);

@@ -6,7 +6,6 @@ export default {
   argTypes: {
     boardSize: {
       control: 'select',
-      options: [9, 13, 19]
     },
   },
   decorators: [

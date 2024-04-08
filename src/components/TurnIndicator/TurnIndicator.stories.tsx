@@ -7,8 +7,8 @@ export default {
 };
 
 const testPlayers = [
-  newPlayer('Player 1', StoneType.Black), 
-  newPlayer('Player 2', StoneType.White)
+  newPlayer('Player 1: You', StoneType.Black),
+  newPlayer('Player 2: AI Agent', StoneType.White)
 ];
 
 export const Player1Turn = {

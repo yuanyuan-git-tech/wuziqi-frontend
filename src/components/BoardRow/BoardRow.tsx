@@ -10,7 +10,7 @@ interface BoardRowProps {
 /**
  * Rows that only exist as a child of the Board component. They contain Points.
  */
-const BoardRow = ({ rowIndex, boardSize = 9, children = '' }: BoardRowProps) => (
+const BoardRow = ({ rowIndex, boardSize = 7, children = '' }: BoardRowProps) => (
   <li 
     className={styles[`size-${boardSize}x${boardSize}`]} 
     data-testid="BoardRow"

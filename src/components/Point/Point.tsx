@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Point.module.css';
 import Stone, { StoneType } from 'components/Stone/Stone';
-import { isStarPoint } from 'services/starPoints';
+// import { isStarPoint } from 'services/starPoints';
 
 /**
  * Get class names for the Point's parent HTML element.
@@ -23,9 +23,9 @@ export const getPointClassNames = (boardSize: number, gridX: number, gridY: numb
   }
 
   // Star points (dots appearing on certain grid line intersections).
-  if (isStarPoint(boardSize, gridX, gridY)){
-    classNames.push(styles.star);
-  }
+  // if (isStarPoint(boardSize, gridX, gridY)){
+  //   classNames.push(styles.star);
+  // }
 
   return classNames.join(' ');
 };
@@ -67,7 +67,7 @@ const Point = ({stoneType = 0, boardSize, gridX, gridY, turn, onClickPoint}: Poi
       type="button" 
       className={ !turn ? styles.btnBlackTurn : styles.btnWhiteTurn }
       aria-label={`Point (${gridX + 1},${gridY + 1})`}
-      disabled={stoneType !== StoneType.Empty}
+      disabled={turn || stoneType !== StoneType.Empty}
       onClick={onClickPoint !== undefined ? (e) => onClickPoint(e, gridX, gridY) : undefined}
     >
       { stoneType !== StoneType.Empty && <Stone stoneType={stoneType} /> }

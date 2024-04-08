@@ -27,7 +27,7 @@ interface BoardStoryProps extends BoardProps {
 
 const Default: StoryObj<BoardStoryProps> = {
   render: ({boardData, displayContents, ...otherArgs}) => {
-    const displayStones = (displayContents === 'Random Stones' ? true : false);
+    const displayStones = (displayContents === 'Random Stones');
     return (
       <Board boardData={newBoardData(otherArgs.boardSize, displayStones)} {...otherArgs} />
     );
@@ -37,23 +37,9 @@ const Default: StoryObj<BoardStoryProps> = {
   }
 };
 
-export const Board9x9 = {
+export const Board7x7 = {
   ...Default,
   args: {
-    boardSize: 9
-  }
-};
-
-export const Board13x13 = {
-  ...Default,
-  args: {
-    boardSize: 13
-  }
-};
-
-export const Board19x19 = {
-  ...Default,
-  args: {
-    boardSize: 19
+    boardSize: 7
   }
 };

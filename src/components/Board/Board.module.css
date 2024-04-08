@@ -59,20 +59,10 @@
 	}
 }
 
-.size-9x9,
-.size-13x13,
-.size-19x19 {
+.size-7x7 {
 	composes: board;
 }
 
-.size-9x9 {
-	--board-size: 9;
-}
-
-.size-13x13 {
-	--board-size: 13;
-}
-
-.size-19x19 {
-	--board-size: 19;
+.size-7x7 {
+	--board-size: 7;
 }

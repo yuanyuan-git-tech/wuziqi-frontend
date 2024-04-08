@@ -14,17 +14,10 @@ export interface StarPoints {
  */
 export const boardStarPoints: readonly StarPoints[] = Object.freeze([
 	{
-		boardSize: 9,
-		stars: [[3,3], [3,7], [5,5], [7,7], [7,3]]
-	},
-	{
-		boardSize: 13,
-		stars: [[4,4], [4,7], [4,10], [7,4], [7,7], [7,10], [10,4], [10,7], [10,10]]
-	},
-	{
-		boardSize: 19,
-		stars: [[4,4], [4,10], [4,16], [10,4], [10,10], [10,16], [16,4], [16,10], [16,16]]
-	},
+		boardSize: 7,
+		// stars: [[3,3], [3,7], [5,5], [7,7], [7,3]]
+		stars: []
+	}
 ]);
 
 /**
