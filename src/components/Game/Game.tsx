@@ -108,7 +108,7 @@ function Game() {
     const boardStatus: number[][] = boardData.map(row => row.map(stone => stone as number));
     const resultDict = convertBoardToDict(boardStatus);
     const postData = {
-      "states": resultDict
+      "queryStringParameters": resultDict
     }
     try {
       const response = await fetch(AWSLambdaUrl, {
