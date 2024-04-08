@@ -1,4 +1,4 @@
-# The Game of Weiqi
+# The Game of Wuziqi
 
 A frontend project to create the board game **Wuziqi** in React. The backend is hosted on AWS Lambda.
 
