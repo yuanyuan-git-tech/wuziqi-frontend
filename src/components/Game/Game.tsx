@@ -8,8 +8,8 @@ import { canPlaceStone } from 'services/gameLogic';
 import { IPlayer, newPlayer } from 'services/player';
 import * as process from "process";
 
-const AWSLambdaUrl = process.env.AWS_LAMBDA_URL ?? ''
-
+//const AWSLambdaUrl = process.env.AWS_LAMBDA_URL ?? ''
+const AWSLambdaUrl = 'https://vk1iw9rg7f.execute-api.us-east-1.amazonaws.com/default/';
 /**
  * JSON returned from aws lambda backend
  */
@@ -102,26 +102,22 @@ function Game() {
     });
     return { states };
   }
-  let responseData;
+  
   const getAIAgentMove = async () => {
-    // {"states": {1: 1, 2: 1, 3: 1, 4: 1, 8: 1, 9: 1, 18: 2, 22: 2, 23: 2, 24: 2, 25: 2, 26: 2}}
     const boardStatus: number[][] = boardData.map(row => row.map(stone => stone as number));
     const resultDict = convertBoardToDict(boardStatus);
-    const postData = {
-      "queryStringParameters": resultDict
-    }
     try {
       const response = await fetch(AWSLambdaUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(postData),
+        body: JSON.stringify(resultDict),
       });
-
       if (!response.ok) {
         throw new Error(`Error! status: ${response.status}`);
       }
+      // console.log(response)
       const responseData = await response.json();
       handleMessage(responseData);
     } catch (error) {
