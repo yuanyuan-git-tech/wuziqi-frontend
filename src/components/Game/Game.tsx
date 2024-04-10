@@ -44,6 +44,7 @@ function Game() {
     ]
   );
   const [winner, setWinner] = useState<String>("");
+  const [ended, setEnded] = useState<boolean>(false);
   /**
    * Start game with currently selected board size.
    */
@@ -87,7 +88,6 @@ function Game() {
 
     // After player's turn, immediately post a request to get AI-Agent's turn
     const results = getAIAgentMove();
-    setTurn(turn);
   };
 
   const convertBoardToDict = (boardStatus: number[][]): { states: { [key: number]: number } } => {
@@ -126,13 +126,13 @@ function Game() {
   }
 
   const handleMessage = (response: Message) => {
-    if (typeof response['Agent-Move'] === 'number') {
+    if (typeof response['Agent-Move'] === 'number' && response['Agent-Move'] !== -1) {
       const gridX = (response['Agent-Move'] % boardSize);
       const gridY = boardSize - 1 - Math.floor(response['Agent-Move'] / boardSize);
       const currentPlayerStone = (turn ? StoneType.Black : StoneType.White);
       changeStone(gridX, gridY, currentPlayerStone);
     }
-    if (response['Has-End']) {
+    else if (response['Has-End'] || response['Agent-Move'] === -1) {
       let winner: 'player' | 'ai-agent' | 'tie';
       switch (response['Winner']) {
         case 1:
@@ -145,9 +145,16 @@ function Game() {
           winner = 'tie';
       }
       setWinner(winner);
+      setEnded(true);
       setGamePhase(GamePhase.GameOver);
     }
+    setTurn(turn);
   };
+
+  const handleGameOver = () => {
+    setGamePhase(GamePhase.ChooseBoard);
+    setEnded(false);
+  }
 
   /**
    * Render main game contents, based on current phase of game.
@@ -162,7 +169,7 @@ function Game() {
                 <small>Game Over</small>
               </h1>
               <p className={styles.subtitle}>{winner ? `Winner: ${winner}` : "It's a tie!"}</p>
-              <button className={styles.button} onClick={() => setGamePhase(GamePhase.ChooseBoard)}>Restart</button>
+              <button className={styles.button} onClick={handleGameOver}>Restart</button>
             </div>
         );
 
@@ -170,7 +177,7 @@ function Game() {
         return (
           <>
             <TurnIndicator turn={turn} players={players} />
-            {winner !== '' && <p>Winner is {winner}!</p>}
+            {ended && <p>Winner is {winner}!</p>}
             <Board
               boardSize={boardSize}
               boardData={boardData}
