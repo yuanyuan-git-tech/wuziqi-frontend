@@ -120,19 +120,15 @@ function Game() {
       // console.log(response)
       const responseData = await response.json();
       handleMessage(responseData);
+      setTurn(turn);
     } catch (error) {
       console.error('Failed to get AI agent move:', error);
     }
   }
 
   const handleMessage = (response: Message) => {
-    if (typeof response['Agent-Move'] === 'number' && response['Agent-Move'] !== -1) {
-      const gridX = (response['Agent-Move'] % boardSize);
-      const gridY = boardSize - 1 - Math.floor(response['Agent-Move'] / boardSize);
-      const currentPlayerStone = (turn ? StoneType.Black : StoneType.White);
-      changeStone(gridX, gridY, currentPlayerStone);
-    }
-    else if (response['Has-End'] || response['Agent-Move'] === -1) {
+    // end
+    if (response['Has-End']) {
       let winner: 'player' | 'ai-agent' | 'tie';
       switch (response['Winner']) {
         case 1:
@@ -147,8 +143,12 @@ function Game() {
       setWinner(winner);
       setEnded(true);
       setGamePhase(GamePhase.GameOver);
+    } else if (typeof response['Agent-Move'] === 'number') {
+      const gridX = (response['Agent-Move'] % boardSize);
+      const gridY = boardSize - 1 - Math.floor(response['Agent-Move'] / boardSize);
+      const currentPlayerStone = (turn ? StoneType.Black : StoneType.White);
+      changeStone(gridX, gridY, currentPlayerStone);
     }
-    setTurn(turn);
   };
 
   const handleGameOver = () => {
