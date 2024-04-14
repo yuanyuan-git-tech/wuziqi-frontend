@@ -28,13 +28,21 @@ export enum GamePhase {
   PlayingGame,
   GameOver
 }
+
+/**
+ * Available board sizes.
+ */
+export const boardSizeOptions = [7, 15] as const;
+export type BoardSizeOption = typeof boardSizeOptions[number];
+
 /**
  * Main Game (App).
  */
 function Game() {
   const [gamePhase, setGamePhase] = useState<GamePhase>(GamePhase.ChooseBoard);
   const [turn, setTurn] = useState<boolean>(false);
-  const boardSize = 7;
+  // const boardSize = 7;
+  const [boardSize, setBoardSize] = useState<BoardSizeOption>(7);  // Default size
 
   const [boardData, setBoardData] = useState<StoneType[][]>(newBoardData(boardSize));
   const [players] = useState<IPlayer[]>(
@@ -87,10 +95,13 @@ function Game() {
     setTurn(!turn);
 
     // After player's turn, immediately post a request to get AI-Agent's turn
-    const results = getAIAgentMove();
+    getAIAgentMove();
   };
 
-  const convertBoardToDict = (boardStatus: number[][]): { states: { [key: number]: number } } => {
+  const convertBoardToDict = (boardStatus: number[][]): {
+    size: number; states: { [key: number]: number } 
+} => {
+    let size = boardSize;
     let states: { [key: number]: number } = {};
     boardStatus.forEach((row, gridX) => {
       row.forEach((stone, gridY) => {
@@ -100,7 +111,7 @@ function Game() {
         }
       });
     });
-    return { states };
+    return { size, states };
   }
   
   const getAIAgentMove = async () => {
@@ -198,17 +209,31 @@ function Game() {
 
             <article className={styles.content}>
               <fieldset>
-                <legend>Board Size</legend>
+                <legend>Choose a Board Size</legend>
+                <div className={styles.radioGrid}>
+                  {boardSizeOptions.map((size) => (
                     <div
-                      className={styles.radioGridItemSelected}
-                      key={boardSize}
+                      className={boardSize === size ? styles.radioGridItemSelected : styles.radioGridItem}
+                      key={size}
+                      onClick={(e) => setBoardSize(size)}
                     >
-                      <label htmlFor={`boardSize-${boardSize}`}>
+                      <label htmlFor={`boardSize-${size}`}>
                         <div className={styles.itemHeading}>
-                          {boardSize}&nbsp;<span className={styles.by}><span aria-hidden="true">x</span><span className='screen-reader-text'>by</span></span>&nbsp;{boardSize}
+                          {size}&nbsp;<span className={styles.by}><span aria-hidden="true">x</span><span className='screen-reader-text'>by</span></span>&nbsp;{size}
                         </div>
                       </label>
+                      <input
+                        checked={boardSize === size}
+                        type="radio"
+                        value={size}
+                        id={`boardSize-${size}`}
+                        name="boardSize"
+                        onChange={(e) => setBoardSize(size)}
+                        className={styles.radioInput}
+                      />
                     </div>
+                  ))}
+                </div>
               </fieldset>
 
               <p>

@@ -66,3 +66,11 @@
 .size-7x7 {
 	--board-size: 7;
 }
+
+.size-15x15 {
+	composes: board;
+}
+
+.size-15x15 {
+	--board-size: 15;
+}

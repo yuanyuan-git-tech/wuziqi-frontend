@@ -31,6 +31,7 @@ export interface BoardProps {
  */
 const Board = ({boardSize = 7, boardData, turn = false, handleClickPoint}: BoardProps) => {
   // Rows containing all Points.
+  //console.log(boardSize)
   let boardRows: JSX.Element[] = [];
 
   for (let y = 0; y < boardSize; y++) {

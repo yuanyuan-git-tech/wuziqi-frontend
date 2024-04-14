@@ -20,3 +20,11 @@
 	--board-size: 7;
 }
 
+.size-15x15 {
+	composes: row;
+}
+
+.size-15x15 {
+	--board-size: 15;
+}
+
